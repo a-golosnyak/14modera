@@ -1,0 +1,21 @@
+html, body {
+    font-size: 18px;
+    height: 100%;
+    font-family: Arial, Tahoma, Georgia, "Times New Roman", Times, serif;
+}
+
+.list-group-item {
+	padding: 0.4rem 0.7rem;
+}
+
+.b-round-s {
+	border-radius: 0.2rem;
+}
+
+a{
+	color: #303030;
+}
+
+main-container{
+	height: 75% !important;
+}

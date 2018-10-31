@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::get('/', 		'CategoryController@getValues');
+Route::get('/set', 		'CategoryController@setValues');
+Route::get('/clear', 	'CategoryController@clearDb');
