@@ -11,6 +11,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CategoryController extends Controller
 {
+	/****************************************************************************
+	* Descritpion
+	* @param  array  $data
+	* @return 
+	*****************************************************************************/
     public function setValues()
     {
         $cat = new Category;
@@ -34,14 +39,39 @@ class CategoryController extends Controller
     	return view('main', ['cats'=>$cats]);
     }
 
-    public function getValues()
+	/****************************************************************************
+	* Descritpion
+	* @param  array  $data
+	* @return 
+	*****************************************************************************/
+    public function getValues($parent_id = 0)
     {
-        $cats = Category::orderBy('id', 'desc');
-        $cats = DB::select('SELECT * FROM category WHERE parent_id=0');
+//        $cats = Category::orderBy('id', 'desc');
+        $cats = DB::select("SELECT * FROM category WHERE parent_id=$parent_id");
 
     	return view('main', ['cats'=>$cats]);
     }
 
+    /****************************************************************************
+	* Get sub category
+	* @param  int $parent_id
+	* @return 
+	*****************************************************************************/
+    public function getSubvalues(Request $request)
+    {
+/*    	if ($request->isMethod('post')){    
+            return response()->json(['response' => 'This is post method']); 
+        }
+*/
+    	$cats = DB::select("SELECT * FROM category WHERE parent_id=0");
+        return response()->json($cats);
+    }
+
+	/****************************************************************************
+	* Descritpion
+	* @param  array  $data
+	* @return 
+	*****************************************************************************/
     public function clearDb()
     {
     	DB::delete('DELETE FROM category');
@@ -64,7 +94,7 @@ class CategoryController extends Controller
 	  * @brief  Функция возвращает случайную строку.
 	  * @param  length - длинна строки 
 	  * @retval Собственно строка.
-	   ********************************************************************/
+	***********************************************************************/
 	function RandString($length = 2)
 	{
 	    $characters = 'abcdefghijklmnopqrstuvwxyz';       // ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789

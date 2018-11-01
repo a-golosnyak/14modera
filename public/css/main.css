@@ -19,3 +19,7 @@ a{
 main-container{
 	height: 75% !important;
 }
+
+.point{
+	cursor: pointer;
+}

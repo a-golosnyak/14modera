@@ -14,7 +14,11 @@
 			<ul>
 				@foreach($cats as $cat)
 					@if($cat->parent_id === 0)
-						<li><a class="blue-grey-text" href="#">{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}</a></li>
+						<li class="point">
+							<form id="{{$cat->id}}" action="/$cat->id" class="blue-grey-text" onclick="GetCategory({{$cat->id}});">
+								{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}
+							</form>
+						</li>
 					@else
 						<li class="black-text">{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}</li>
 					@endif
