@@ -67,7 +67,7 @@ class CategoryController extends Controller
 	   ********************************************************************/
 	function RandString($length = 2)
 	{
-	    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';       // 0123456789
+	    $characters = 'abcdefghijklmnopqrstuvwxyz';       // ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789
 	    $charactersLength = strlen($characters);
 	    $randomString = '';
 	    for ($i = 0; $i < $length; $i++) {
