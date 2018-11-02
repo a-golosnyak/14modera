@@ -14,10 +14,10 @@
 			<ul>
 				@foreach($cats as $cat)
 					@if($cat->parent_id === 0)
-						<li class="point">
-							<form id="{{$cat->id}}" action="/$cat->id" class="blue-grey-text" onclick="GetCategory({{$cat->id}});">
-								{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}
+						<li id="item{{$cat->id}}" class="blue-grey-text point">
+							<form  onclick="GetCategory({{$cat->id}});">{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}<input id="trigg{{$cat->id}}" type="hidden" value="0">	
 							</form>
+							<div id="data{{$cat->id}}"> </div>
 						</li>
 					@else
 						<li class="black-text">{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}</li>

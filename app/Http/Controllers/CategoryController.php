@@ -21,10 +21,22 @@ class CategoryController extends Controller
         $cat = new Category;
 
         for ($i=0; $i<5 ; $i++)
+        { 
+            $uniq_str = self::RandString(2);
+            $cat->name = 'Cat_' . $uniq_str;
+            $cat->parent_id = 0;
+
+            DB::update(" INSERT INTO category 
+                            SET 
+                            name='$cat->name',
+                            parent_id='$cat->parent_id'");
+        }
+
+        for ($i=0; $i<20 ; $i++)
        	{ 
 	        $uniq_str = self::RandString(2);
 	        $cat->name = 'Cat_' . $uniq_str;
-	        $cat->parent_id = rand(0, $i);
+	        $cat->parent_id = rand(0, 5);
 
 	      	DB::update(" INSERT INTO category 
                             SET 
@@ -63,7 +75,17 @@ class CategoryController extends Controller
             return response()->json(['response' => 'This is post method']); 
         }
 */
-    	$cats = DB::select("SELECT * FROM category WHERE parent_id=0");
+        $this->validate($request, ['id' => 'required']);
+        $parent_id = $request->input('id');
+
+        $cats = DB::select("SELECT * FROM category WHERE parent_id=$parent_id");
+
+//        $cats = Category::where('parent_id', $parent_id)->get();
+
+/*        for ($i = 0; $i<Category::count(); $i++) {
+            $value['has_childs'] = '1';
+        }
+  */      
         return response()->json($cats);
     }
 

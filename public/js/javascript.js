@@ -7,36 +7,56 @@ function C(i) { return document.getElementsByClassName(i)                    }
 
 function GetCategory (id)
 {
-    data = 'id='+ id;
-    request = new ajaxRequest()
-    request.open("POST", "/get", true)
-    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8")   // При использовании обьекта FormData это почему-то не нужно
-    request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'))   // При использовании обьекта FormData это почему-то не нужно
+    trigg = document.getElementById('trigg'+id).value;
 
-    request.onreadystatechange = function()
+    if(trigg == 0)
     {
-        if (this.readyState == 4)
-            if (this.status == 200)
-                if (this.responseText != null)
-                {
-                    alert(this.responseText);
-                    var response = JSON.parse(this.responseText);
-                    alert(response);
+        document.getElementById('trigg'+id).value = 1;
 
-/*                    for (var key in response) 
+        data = 'id='+ id;
+        request = new ajaxRequest()
+        request.open("POST", "/get", true)
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8")    // При использовании обьекта FormData это почему-то не нужно
+        request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'))          // При использовании обьекта FormData это почему-то не нужно
+        
+        request.onreadystatechange = function()
+        {
+            if (this.readyState == 4)
+                if (this.status == 200)
+                    if (this.responseText != null)
                     {
-                    // этот код будет вызван для каждого свойства объекта
-                    // ..и выведет имя свойства и его значение
-                    // alert( "Ключ: " + key + " значение: " + response[key] );
-                    newdiv = document.createElement('div');
-                    newdiv.className = "dropdown-item";
-                    newdiv.innerHTML  = response[key];
+                      alert(this.responseText);
+                        var response = JSON.parse(this.responseText);
+//                      alert(response[0].name);
 
-                    Categories.appendChild(newdiv); 
-                    }*/
-                }
+                        if (response.length == 0)
+                        {
+                            document.getElementById('item'+id).className = 'red-text';
+                        }
+                        else
+                        {
+                            parent = document.getElementById('data'+id);
+                            ul = document.createElement('ul');
+                            ul.className = "";
+
+                            for (var key in response) 
+                            {                     
+                                ul.innerHTML += "<li id='item"+ response[key].id +"' class='point blue-grey-text'><form  onclick='GetCategory("+ response[key].id +");'>"+ 
+                                                response[key].id +" "+ response[key].name +" "+ response[key].parent_id +"<input id='trigg"+ response[key].id +
+                                                "' type='hidden' value='0'></form><div id='data{{$cat->id}}'> </div></li>";
+
+                                parent.appendChild(ul);
+                            }
+                        }
+                    }
+        }
+        request.send(data);
     }
-    request.send(data);
+    else
+    {
+        document.getElementById('trigg'+id).value = 0;
+        parent = document.getElementById('data'+id).innerHTML = '';
+    }
 }
 
 function ajaxRequest()
