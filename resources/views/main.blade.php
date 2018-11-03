@@ -2,50 +2,21 @@
 
 @section('content')
 	<div class="container">
-{{--		<div class="list-group">
-			<div class="list-group-item">Cras justo odio</div>
-			<div class="list-group-item">Dapibus ac facilisis in</div>
-			<div class="list-group-item">Morbi leo risus</div>
-			<div class="list-group-item">Porta ac consectetur ac</div>
-			<div class="list-group-item">Vestibulum at eros</div>
-		</div>	--}}
-
 		@if(isset($cats))
-			<ul>
+			<ul class="list-group">
 				@foreach($cats as $cat)
 					@if($cat->parent_id === 0)
-						<li id="item{{$cat->id}}" class="blue-grey-text point">
-							<form  onclick="GetCategory({{$cat->id}});">{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}<input id="trigg{{$cat->id}}" type="hidden" value="0">	
+						<li id="item{{$cat->id}}" class="blue-grey-text point list-group-item">
+							<form  onclick="GetCategory({{$cat->id}});">{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}
+								<input id="trigg{{$cat->id}}" type="hidden" value="0">	
 							</form>
-							<div id="data{{$cat->id}}"> </div>
+							<ul id="data{{$cat->id}}"> </ul>
 						</li>
 					@else
 						<li class="black-text">{{$cat->id}} {{$cat->name}} {{$cat->parent_id}}</li>
 					@endif
 				@endforeach
 			</ul>
-		
-
-{{--			<ul>
-				<li><a href="#">{{$cats->name}}</a></li>
-				<li>Cras justo odio</li>
-				<li>Cras justo odio</li>
-				<li>Cras justo odio</li>
-				
-				<ul>
-					<li>Cras justo odio</li>
-					<li>Cras justo odio</li>
-					<ul>
-						<li>Cras justo odio</li>
-						<li>Cras justo odio</li>
-						<li>Cras justo odio</li>
-					</ul>
-					<li>Cras justo odio</li>
-					<li>Cras justo odio</li>
-				</ul>
-				
-				<li>Cras justo odio</li>
-			</ul>		--}}
 		@endif
 	</div>
 @endsection

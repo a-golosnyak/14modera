@@ -25,27 +25,20 @@ function GetCategory (id)
                 if (this.status == 200)
                     if (this.responseText != null)
                     {
-                      alert(this.responseText);
+//                        alert(this.responseText);
                         var response = JSON.parse(this.responseText);
-//                      alert(response[0].name);
 
                         if (response.length == 0)
-                        {
-                            document.getElementById('item'+id).className = 'red-text';
-                        }
+                            document.getElementById('item'+id).className = 'red-text list-group-item';
                         else
                         {
                             parent = document.getElementById('data'+id);
-                            ul = document.createElement('ul');
-                            ul.className = "";
 
                             for (var key in response) 
-                            {                     
-                                ul.innerHTML += "<li id='item"+ response[key].id +"' class='point blue-grey-text'><form  onclick='GetCategory("+ response[key].id +");'>"+ 
-                                                response[key].id +" "+ response[key].name +" "+ response[key].parent_id +"<input id='trigg"+ response[key].id +
-                                                "' type='hidden' value='0'></form><div id='data{{$cat->id}}'> </div></li>";
-
-                                parent.appendChild(ul);
+                            {                             
+                                parent.innerHTML += "<li id='item"+ response[key].id +"' class='blue-grey-text point list-group-item'><form  onclick='GetCategory("+ response[key].id +");'>"+ 
+                                response[key].id +" "+ response[key].name +" "+ response[key].parent_id +
+                                "<input id='trigg"+ response[key].id +"' type='hidden' value='0'> </form><ul id='data"+ response[key].id +"'> </ul></li>";
                             }
                         }
                     }

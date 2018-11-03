@@ -32,17 +32,41 @@ class CategoryController extends Controller
                             parent_id='$cat->parent_id'");
         }
 
-        for ($i=0; $i<20 ; $i++)
+        for ($i=0; $i<2 ; $i++)
        	{ 
 	        $uniq_str = self::RandString(2);
 	        $cat->name = 'Cat_' . $uniq_str;
-	        $cat->parent_id = rand(0, 5);
+	        $cat->parent_id = 1;
 
 	      	DB::update(" INSERT INTO category 
                             SET 
                             name='$cat->name',
                             parent_id='$cat->parent_id'");
       	}
+
+        for ($i=0; $i<2 ; $i++)
+        { 
+            $uniq_str = self::RandString(2);
+            $cat->name = 'Cat_' . $uniq_str;
+            $cat->parent_id = 6;
+
+            DB::update(" INSERT INTO category 
+                            SET 
+                            name='$cat->name',
+                            parent_id='$cat->parent_id'");
+        }
+
+        for ($i=0; $i<2 ; $i++)
+        { 
+            $uniq_str = self::RandString(2);
+            $cat->name = 'Cat_' . $uniq_str;
+            $cat->parent_id = 8;
+
+            DB::update(" INSERT INTO category 
+                            SET 
+                            name='$cat->name',
+                            parent_id='$cat->parent_id'");
+        }
 /*
         $cat->id = DB::getPdo()->lastInsertId();
         return redirect("/$ad->id")->with('status', 'Ad created');
@@ -71,10 +95,6 @@ class CategoryController extends Controller
 	*****************************************************************************/
     public function getSubvalues(Request $request)
     {
-/*    	if ($request->isMethod('post')){    
-            return response()->json(['response' => 'This is post method']); 
-        }
-*/
         $this->validate($request, ['id' => 'required']);
         $parent_id = $request->input('id');
 
@@ -111,6 +131,47 @@ class CategoryController extends Controller
     	return view('main', ['cats'=>$cats]);
     }
 
+    /****************************************************************************
+    * Descritpion
+    * @param  array  $data
+    * @return 
+    *****************************************************************************/
+    public function loadValues(Request $request)
+    {
+        if($request->isMethod('post'))
+        {
+            if($request->hasFile('data')) 
+            {
+                $file = $request->file('data');
+                $file->move(public_path() . '/files/', 'category.json');     //$file->getClientOriginalName()
+            }
+        } 
+
+        $json = json_decode(file_get_contents(public_path() . "/files/category.json"), true); 
+
+        echo "<pre>"; 
+        var_dump( $json); 
+        echo "</pre>";
+
+        $category = new Category;
+
+        foreach ($json as $item) {
+            $category->id = $item['id'];
+            $category->name = $item['name'];
+            $category->parent_id = $item['parent_id'];
+            $category->save();
+
+            echo "<pre>"; 
+            var_dump( $item); 
+            echo "</pre>";  
+            echo "<br>";
+            
+        }
+
+         
+
+//       return redirect("/")->with('status', 'File loaded');
+    }
 
 	/**********************************************************************
 	  * @brief  Функция возвращает случайную строку.

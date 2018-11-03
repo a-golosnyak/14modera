@@ -11,8 +11,26 @@
         <form action="/clear">
             <button class="btn waves-effect px-4 py-2 b-round-s mdb-color darken-1 text-light" type="submit">Clear DB</button>
         </form>
-        <form action="/">
-            <button class="btn waves-effect px-4 py-2 b-round-s mdb-color darken-1 text-light" type="submit">Load file</button>
+
+        <form method="post" action="/load" enctype="multipart/form-data">
+            <input name="_token" type="hidden" value="{{ csrf_token() }}">
+            <input class=" b-round-s mdb-color darken-1 text-light" type="file" name="data">
+            <button class="btn waves-effect px-4 py-2 b-round-s mdb-color darken-1 text-light type="submit">Load file</button>
         </form>
+
+
+        <!--form class="md-form" action="/">
+            <div class="btn waves-effect px-4 py-2 b-round-s mdb-color darken-1 text-light">
+                    <span>Choose file</span>
+                    <input type="file">
+            </div>
+            <button class="btn waves-effect px-4 py-2 b-round-s mdb-color darken-1 text-light" type="submit">Load file</button>
+
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Upload your file">
+            </div>
+        </form-->
+
+      
     </div>
 </nav>

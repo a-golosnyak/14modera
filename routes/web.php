@@ -15,3 +15,4 @@ Route::get('/', 			'CategoryController@getValues');
 Route::get('/set', 			'CategoryController@setValues');
 Route::get('/clear', 		'CategoryController@clearDb');
 Route::post('/get', 		'CategoryController@getSubvalues');
+Route::post('/load', 		'CategoryController@loadValues');
