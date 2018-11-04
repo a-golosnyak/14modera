@@ -8,6 +8,16 @@
 
 @if(session('status'))
 	<div class="alert alert-success">
-		{{ session('status') }}
+		<div class='container'>
+			{{ session('status') }}
+		</div>
+	</div>
+@endif
+
+@if(session('error'))
+	<div class="alert alert-danger">
+		<div class='container'>
+			{{ session('error') }}
+		</div>
 	</div>
 @endif

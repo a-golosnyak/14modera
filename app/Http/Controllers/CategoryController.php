@@ -67,10 +67,7 @@ class CategoryController extends Controller
                             name='$cat->name',
                             parent_id='$cat->parent_id'");
         }
-/*
-        $cat->id = DB::getPdo()->lastInsertId();
-        return redirect("/$ad->id")->with('status', 'Ad created');
-*/
+
         $cats = DB::select('SELECT * FROM category WHERE parent_id=0');
     	return view('main', ['cats'=>$cats]);
     }
@@ -143,34 +140,41 @@ class CategoryController extends Controller
             if($request->hasFile('data')) 
             {
                 $file = $request->file('data');
-                $file->move(public_path() . '/files/', 'category.json');     //$file->getClientOriginalName()
+                $file->move(public_path() . '/files/', 'lastconfig.json');     //$file->getClientOriginalName()
             }
         } 
 
-        $json = json_decode(file_get_contents(public_path() . "/files/category.json"), true); 
+        $json = json_decode(file_get_contents(public_path() . "/files/lastconfig.json"), true); 
 
-        echo "<pre>"; 
-        var_dump( $json); 
-        echo "</pre>";
+        if($json == null)
+        {
+            return redirect("/")->with('error', 'Loading failed. File content does not correspond to system requirements.');
+        }
+
+        DB::delete('DELETE FROM category');
+        Schema::dropIfExists('category');
+        Schema::create('category', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('parent_id');
+        });
 
         $category = new Category;
 
-        foreach ($json as $item) {
+        foreach ($json as $item) 
+        {
             $category->id = $item['id'];
             $category->name = $item['name'];
             $category->parent_id = $item['parent_id'];
-            $category->save();
 
-            echo "<pre>"; 
-            var_dump( $item); 
-            echo "</pre>";  
-            echo "<br>";
-            
+            DB::update(" INSERT INTO category 
+                            SET 
+                            id='$category->id',
+                            name='$category->name',
+                            parent_id='$category->parent_id' ");     
         }
 
-         
-
-//       return redirect("/")->with('status', 'File loaded');
+        return redirect("/")->with('status', 'File loaded');
     }
 
 	/**********************************************************************

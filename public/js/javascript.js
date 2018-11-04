@@ -29,14 +29,16 @@ function GetCategory (id)
                         var response = JSON.parse(this.responseText);
 
                         if (response.length == 0)
-                            document.getElementById('item'+id).className = 'red-text list-group-item';
+                        {
+                            document.getElementById('item'+id).className = 'red-text list-group-item animated shake';
+                        }
                         else
                         {
                             parent = document.getElementById('data'+id);
 
                             for (var key in response) 
                             {                             
-                                parent.innerHTML += "<li id='item"+ response[key].id +"' class='blue-grey-text point list-group-item'><form  onclick='GetCategory("+ response[key].id +");'>"+ 
+                                parent.innerHTML += "<li id='item"+ response[key].id +"' class='blue-grey-text point list-group-item animated fadeInRight faster'><form  onclick='GetCategory("+ response[key].id +");'>"+ 
                                 response[key].id +" "+ response[key].name +" "+ response[key].parent_id +
                                 "<input id='trigg"+ response[key].id +"' type='hidden' value='0'> </form><ul id='data"+ response[key].id +"'> </ul></li>";
                             }
@@ -48,7 +50,17 @@ function GetCategory (id)
     else
     {
         document.getElementById('trigg'+id).value = 0;
-        parent = document.getElementById('data'+id).innerHTML = '';
+        document.getElementById('data'+id).className = 'animated fadeOutRight faster';
+
+        // Событие произходит по окончанию анимирования. Проверяем состояние value элемента 'trigg'+id потому что
+        // нам нужно удалять содержимое 'data'+id только если анимация fadeOutRight.
+        $("#data"+id).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            if(document.getElementById('trigg'+id).value == 0)
+            {
+                document.getElementById('data'+id).innerHTML = '';
+                document.getElementById('data'+id).className = '';
+            }
+        });
     }
 }
 

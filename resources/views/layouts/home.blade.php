@@ -13,22 +13,23 @@
     <link href="{{URL::asset('css/main.css')}}" rel="stylesheet">
 </head>
 <body>
-    @include('inc.navigation')
-    @include('inc.messages')
+    <div class='wrapper'>
 
-    <div class='container mb-5  main-container'>
-        <div class='' >
+        @include('inc.navigation')
+        @include('inc.messages')
+
+        <div class='container mb-5 main-container'>
             <br> 
             @yield('content')
+
         </div>
+
+        <footer class="page-footer text-center font-small mdb-color darken-2 mt-4">
+            <div class="footer-copyright py-3">
+                © 2018 Copyright:
+            </div>
+        </footer>
     </div>
-
-    <footer class="page-footer text-center font-small mdb-color darken-2 mt-4 wow fadeIn">
-        <div class="footer-copyright py-3">
-            © 2018 Copyright:
-        </div>
-    </footer>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
