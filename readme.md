@@ -9,3 +9,4 @@ sudo chmod 775 bootstrap/cache
 
 sudo chmod 775 storage
 
+sudo chgrp -R www-data storage bootstrap/cache
